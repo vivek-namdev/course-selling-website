@@ -1,24 +1,26 @@
 const mongoose = require("mongoose");
-mongoose.connect("")
+console.log("connected to");
+
+mongoose.connect("mongodb+srv://viveknamdev018:ZckKKE9IkoDxkIP2@cluster0.r2qd2.mongodb.net/coursera-app")
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
-const userSchema = Schema({
+const userSchema = new Schema({
     email: {type: String, unique: true},
     password: String,
     fisrtName: String,
     lastName: String
 });
 
-const adminSchema = Schema({
+const adminSchema = new Schema({
     email: {type: String, unique: true},
     password: String,
     fisrtName: String,
     lastName: String
 });
 
-const courseSchema = Schema({
+const courseSchema = new Schema({
     title: String,
     description: String,
     price: Number,
@@ -26,7 +28,7 @@ const courseSchema = Schema({
     creatorId: ObjectId
 });
 
-const purchaseSchema = Schema({
+const purchaseSchema = new Schema({
     userId: ObjectId,
     courseId: ObjectId
 });
