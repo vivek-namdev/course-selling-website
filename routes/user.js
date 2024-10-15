@@ -49,7 +49,6 @@ userRouter.post("/signup", async function(req, res) {
     }
 })
     
-// Signin Endpoint
 userRouter.post("/signin", async function(req, res) {
     try {
         const { email, password } = req.body;
@@ -88,7 +87,7 @@ userRouter.post("/signin", async function(req, res) {
         });
     }
 });
-
+    
 userRouter.get("/purchases", function(req, res) {
         res.json({
             message: "signup endpoint"
