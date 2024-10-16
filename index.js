@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -14,7 +15,7 @@ app.use("/api/v1/course", courseRouter);
 
 async function main() {
     try {
-        await mongoose.connect("mongodb+srv://viveknamdev018:ZckKKE9IkoDxkIP2@cluster0.r2qd2.mongodb.net/coursera-app");
+        await mongoose.connect(process.env.MONGO_URL);
         app.listen(3000, () => {
             console.log("Server is running on port 3000");
         });
