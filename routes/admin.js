@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const adminRouter = Router();
-const { adminModel } = require("../db");
+const { adminModel, courseModel } = require("../db");
 const bcrypt = require("bcrypt");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
@@ -86,9 +86,23 @@ adminRouter.post("/signin", async function (req, res) {
     }
 });
 
-adminRouter.post("/course", function(req, res) {
+adminRouter.post("/course", adminModel, async function(req, res) {
+
+    const adminId = req.userId;
+
+    const {title, description, imageUrl, price} = req.body;
+
+    const course = await courseModel.create({
+        title: title,
+        description: description,
+        imageUrl: imageUrl,
+        price: price,
+        creatorId: adminId
+    })
+
     res.json({
-        message: "signup endpoint"
+        message: "course created",
+        courseId: adminId
     })
 })
 
