@@ -4,7 +4,7 @@ const { adminModel } = require("../db");
 const bcrypt = require("bcrypt");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD = "jdbdjdkgxcsghvsjdn123";
+const {JWT_ADMIN_PASSWORD} = require("../config");
 
 const signupSchema = zod.object({
     email: zod.string().email({ message: "Invalid email address" }),
