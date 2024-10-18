@@ -1,9 +1,10 @@
 const {Router} = require("express");
-const {userModel} = require("../db");
+const {userModel, purchaseModel, courseModel} = require("../db");
 const bcrypt = require("bcrypt");
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
 const {JWT_USER_PASSWORD} = require("../config");
+const { userMiddleware } = require("../middleware/user");
 
 const userRouter = Router();
 
@@ -88,9 +89,21 @@ userRouter.post("/signin", async function(req, res) {
     }
 });
     
-userRouter.get("/purchases", function(req, res) {
-        res.json({
-            message: "signup endpoint"
+userRouter.get("/purchases", userMiddleware, async function(req, res) {
+
+    const userId = req.userId;
+
+    const purchases = await purchaseModel.findOne({
+        userId,
+    });
+
+    const courseData = await courseModel.find({
+        _id : { $in: purchases.map(x => x.courseId) }
+    })
+    
+            res.json({
+           purchases,
+           courseData
         })
     })
 
